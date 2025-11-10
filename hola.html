@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DelpinWare &mdash; Soluciones Digitales Profesionales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome 6+ compatible with TikTok icon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --azul-delpin: #0077B6;
+            --verde-delpin: #00C897;
+            --gris-leve: #f3f4f8;
+            --gris-caja: #f9fafb;
+            --gris-borde: #dddddd;
+            --blanco: #fff;
+            --sombra-caja: 0 8px 40px 0 rgba(0, 119, 182, 0.15), 0 1.5px 18px 2px rgba(0, 200, 151, 0.07);
+        }
+        html, body {
+            background: var(--blanco);
+            color: #23242b;
+            margin: 0; padding: 0;
+            scroll-behavior: smooth;
+        }
+        body {
+            min-height: 100vh;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+        header {
+            background: var(--blanco);
+            border-bottom: 1px solid var(--gris-borde);
+            padding: 0.8rem 0;
+        }
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 auto;
+            max-width: 1200px;
+            padding: 0 22px;
+            position: relative;
+        }
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .header-imglogo {
+            width: 68px;
+            height: 68px;
+            background: #f3f3f3;
+            border-radius: 14px;
+            object-fit: contain;
+            margin-right: .8rem;
+            box-shadow: 0 2px 12px #a7e1ff55;
+        }
+        .logo-brand {
+            font-size: 1.19rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--azul-delpin), var(--verde-delpin));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.03em;
+        }
+        nav {
+            flex: 1;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.1rem;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+            justify-content: center;
+        }
+        nav a {
+            color: var(--azul-delpin);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1rem;
+            padding: 7px 18px;
+            border-radius: 7px;
+            transition: background 0.18s, color 0.17s;
+        }
+        nav a:hover, nav a:focus, nav a.active {
+            background: var(--azul-delpin);
+            color: #fff;
+        }
+        .auth-buttons {
+            margin-left: 1rem;
+            display: flex;
+        }
+        .login-btn {
+            padding: 0.39rem 1.17rem;
+            border-radius: 30px;
+            font-weight: 600;
+            background: linear-gradient(90deg, var(--azul-delpin), var(--verde-delpin));
+            color: #fff;
+            border: none;
+            font-size: 1rem;
+            transition: background 0.18s;
+        }
+        .login-btn:hover { background: var(--azul-delpin);}
+        .user-profile { display:none; }
+
+        .mobile-toggle {
+            display: none;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            color: var(--azul-delpin);
+            margin-right: 1.1rem;
+        }
+        @media (max-width: 900px) {
+            .header-content{padding:0 8px;}
+        }
+        @media (max-width: 740px) {
+            .header-content {
+                flex-direction: row;
+                align-items: stretch;
+                justify-content: space-between;
+                gap: 0.3rem;
+            }
+            .header-left {
+                flex: auto;
+                align-items: center;
+                gap: 0.6rem;
+            }
+            .mobile-toggle {
+                display: inline-block;
+                align-self: center;
+                position: static;
+                margin-left: 0;
+                margin-right: 0.6rem;
+                z-index: 1201;
+            }
+            nav {
+                display: flex;
+                align-items: center;
+                flex: 1;
+            }
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 62px;
+                left: 0;
+                width: 100vw;
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 4px 24px #0099aa17;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem 1.5rem 1rem 2rem;
+                margin: 0;
+                z-index: 1001;
+            }
+            nav ul.show {
+                display: flex;
+            }
+            .auth-buttons {
+                margin-left: 0;
+                margin-right: .8rem;
+            }
+            .header-imglogo { width: 60px; height: 60px;}
+        }
+        @media (max-width:520px){
+            .header-imglogo {width:40px;height:40px;}
+        }
+        .hero-bg-section {
+            min-height: 76vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1200&q=80') center center/cover no-repeat;
+            position: relative;
+        }
+        .hero-overlay {
+            position: absolute;
+            top:0; left:0; width:100%; height:100%;
+            background: rgba(16,30,50,0.38);
+        }
+        .hero-content {
+            position: relative;
+            max-width: 640px;
+            width: 95vw;
+            padding: 3.3rem 2.4rem;
+            margin: 80px auto 65px auto;
+            background: rgba(255,255,255,0.96);
+            border-radius: 30px;
+            box-shadow: 0 14px 64px 6px rgba(0,119,182,0.22), 0 2.5px 20px 2px rgba(0, 200, 151, 0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            z-index: 3;
+            border: 2px solid #acebea;
+        }
+        .hero-content h1 {
+            font-size: clamp(2.12rem, 5vw, 2.7rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, var(--azul-delpin) 55%, var(--verde-delpin) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.1rem;
+            letter-spacing: 0.016em;
+        }
+        .hero-content p {
+            font-size: 1.15rem;
+            color: #27282b;
+            margin-bottom: 2.2rem;
+            font-weight: 400;
+            line-height: 1.49;
+        }
+        .cta-button {
+            padding: 0.74rem 2.2rem;
+            background: linear-gradient(90deg, var(--azul-delpin), var(--verde-delpin));
+            color: white;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 1.08rem;
+            border: none;
+            box-shadow: 0 3px 12px rgba(30,150,150,0.11);
+            transition: background 0.13s;
+            letter-spacing: 0.01em;
+        }
+        .cta-button:hover, .cta-button:focus { background: var(--azul-delpin);}
+        /* Contenido principal */
+        .content-section {padding:68px 0;}
+        .section-container {max-width:960px;margin:0 auto;padding:0 18px;}
+        .section-title {
+            text-align: center;
+            font-size: 2.08rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--azul-delpin) 60%, var(--verde-delpin) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2.11rem;
+            letter-spacing: 0.021em;
+            text-shadow: 0 6px 23px #00c89722;
+        }
+        .scroll-section {
+            opacity: 0;
+            transform: translateY(50px) scale(0.98);
+            transition: opacity .65s cubic-bezier(.4,0,.2,1), transform .70s cubic-bezier(.22,.68,.46,1.01);
+            will-change: opacity, transform;
+        }
+        .scroll-section.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .about-box,
+        .contact-box {
+            margin: 0 auto;
+            padding: 2.7rem 2.4rem;
+            max-width: 520px;
+            background: linear-gradient(135deg, #f1fafc 87%, #d0f6ee 100%);
+            border-radius: 23px;
+            box-shadow: var(--sombra-caja);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            font-size: 1.11rem;
+            line-height: 1.74;
+            border: 2.5px solid #b3f3e1;
+        }
+        .about-box ul {
+            margin-left: 1.7em;
+            margin-bottom: 0;
+            padding-left: 0;
+            width: 100%;
+        }
+        .about-box h4,
+        .contact-box h4 {
+            font-weight: 700;
+            font-size: 1.20rem;
+            color: var(--azul-delpin);
+            text-shadow: 0 2px 10px #00c89712;
+            margin-bottom: .4rem;
+        }
+        .about-box,
+        .contact-box > p,
+        .about-box > p {
+            margin-bottom: 0.4em;
+        }
+        .contact-data {
+            text-align: left;
+            width: 100%;
+            margin: 0.63rem auto 1.1rem auto;
+            max-width: 370px;
+        }
+        .contact-data div {margin-bottom: .33rem;font-size: 1.01rem;}
+        .services-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap:2.3rem;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+        }
+        .service-card {
+            flex: 0 1 300px;
+            background: linear-gradient(135deg, #e6f7fb 80%, #d2f6e7 100%);
+            border-radius: 19px;
+            border: 2.5px solid #bfeaf6;
+            box-shadow: 0 7px 30px 0 #0077b61c, 0 1.5px 12px 2px #00C89718;
+            padding: 2em 1.7em 1.7em 1.7em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 270px;
+            max-width: 340px;
+            gap: .7rem;
+            margin-bottom: 0;
+            transition: box-shadow 0.13s, transform 0.15s;
+        }
+        .service-card ul {
+            text-align: left;
+            padding-left: 1.09em;
+            margin: 0;
+        }
+        .service-card h4 {
+            font-size: 1.18rem;
+            font-weight: 700;
+            margin-bottom: 0.39rem;
+            letter-spacing: 0.009em;
+        }
+        .service-icon {
+            font-size: 2.2rem;
+            color: var(--azul-delpin);
+            margin-bottom: .33rem;
+        }
+        .service-card:hover {
+            box-shadow: 0 20px 55px #00c89726, 0 2px 16px #0077B61c;
+            transform: translateY(-8px) scale(1.01);
+            border-color: #00C897;
+            z-index: 3;
+        }
+        /* Footer */
+        .footer-quote {
+            font-size: 1.06rem;
+            color: var(--azul-delpin);
+            margin-bottom: .53rem;
+            letter-spacing: 0.02em;
+        }
+        .social-links {
+            display: flex; justify-content: center; gap: 1rem; margin-bottom: .5rem; flex-wrap: wrap;
+        }
+        .social-links a {
+            display: flex;align-items:center;justify-content:center;width:36px;height:36px;
+            background: #fff;
+            border-radius: 50%;
+            color: var(--azul-delpin);
+            border: 1px solid var(--gris-borde);
+            transition: background 0.2s, color 0.2s;
+            font-size: 1.4rem;
+        }
+        .social-links a:focus,
+        .social-links a:hover { background: var(--azul-delpin); color: #fff;}
+        footer {padding: 1.4rem 0 .9rem 0; background: var(--gris-leve); border-top: 1px solid var(--gris-borde); color: #222; text-align: center; margin-top: 2.2rem;}
+        .user-avatar { display:none;}
+        .modal-backdrop.show { opacity: 0.45; }
+        .modal-content { border-radius: 18px !important; }
+        /* RESPONSIVO: Centrado y espacios extra en cajas abajo */
+        @media (max-width: 1000px) {
+            .about-box,.contact-box {max-width: 94vw;}
+            .service-card {max-width: 98vw;}
+        }
+        @media (max-width: 700px){
+            .section-title { font-size: 1.23rem; margin-bottom:1.1rem;}
+            .about-box, .contact-box { padding: 1.1rem 0.1rem 1.3rem 0.29rem; }
+            .about-box, .contact-box, .service-card { min-width: unset; }
+            .services-grid {
+                flex-direction: column;
+                align-items: center;
+                gap:1.2rem;
+            }
+            .service-card {width: 98vw;max-width:420px;}
+            .about-box,.contact-box{max-width:97vw;}
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <button class="mobile-toggle" id="nav-toggle" aria-label="Abrir menú">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="header-left">
+                <img src="https://cdn-icons-png.flaticon.com/512/4792/4792929.png" class="header-imglogo" alt="Logo DelpinWare" />
+                <span class="logo-brand">DelpinWare</span>
+            </div>
+            <nav>
+                <ul id="nav-menu">
+                    <li><a href="#inicio" class="active">Inicio</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons" id="auth-buttons">
+                <a href="#" class="login-btn" id="login-btn">Iniciar sesión</a>
+            </div>
+            <div class="user-profile" id="user-profile">
+                <div class="user-avatar" id="user-avatar">U</div>
+            </div>
+        </div>
+    </header>
+    <section class="hero-bg-section" id="inicio">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>Pensamos digital, creamos lo esencial para una vida funcional</h1>
+            <p>
+                En DelpinWare desarrollamos soluciones digitales inteligentes, útiles y humanas, combinando creatividad, lógica y empatía. Haz de tu proyecto algo único, funcional y con identidad propia.
+            </p>
+            <a href="#servicios" class="cta-button">Ver servicios</a>
+        </div>
+    </section>
+    <section class="content-section scroll-section" id="nosotros">
+        <div class="section-container">
+            <h2 class="section-title">Sobre DelpinWare</h2>
+            <div class="about-box mx-auto">
+                <h4>¿Quiénes somos?</h4>
+                <p>
+                    DelpinWare es una empresa joven y creativa dedicada a transformar ideas en soluciones digitales personalizadas y profesionales. Fusionamos tecnología, diseño e innovación para entregar herramientas modernas y funcionales, alineadas con los objetivos de tu negocio.
+                </p>
+                <ul>
+                    <li><strong>Innovación:</strong> Transformamos desafíos en soluciones tecnológicas.</li>
+                    <li><strong>Empatía:</strong> Escuchamos y comprendemos a nuestros clientes.</li>
+                    <li><strong>Resultados:</strong> Cumplimos compromisos con calidad profesional.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="content-section scroll-section" id="servicios">
+        <div class="section-container">
+            <h2 class="section-title">Nuestros servicios</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <h4>Software personalizado</h4>
+                    <ul>
+                        <li>Soluciones a la medida para empresas y proyectos específicos.</li>
+                        <li>Desde $1.500.000 COP, según necesidades.</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-mobile-alt"></i></div>
+                    <h4>Aplicaciones a la medida</h4>
+                    <ul>
+                        <li>Apps móviles o de escritorio, funcionales e intuitivas.</li>
+                        <li>Desde $800.000 COP.</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-globe"></i></div>
+                    <h4>Sitios web interactivos</h4>
+                    <ul>
+                        <li>Páginas web profesionales, portafolios o tiendas virtuales.</li>
+                        <li>Desde $600.000 COP.</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon"><i class="fas fa-cogs"></i></div>
+                    <h4>Soluciones especiales</h4>
+                    <ul>
+                        <li>Automatización, integraciones y desarrollos únicos.</li>
+                        <li>Desde $400.000 COP.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="content-section scroll-section" id="contacto">
+        <div class="section-container">
+            <h2 class="section-title">Contacto</h2>
+            <div class="contact-box mx-auto">
+                <h4>¿Listo para impulsar tu idea?</h4>
+                <p>
+                    Escríbenos y descubre cómo podemos ayudarte a crear soluciones digitales profesionales adaptadas a tus necesidades.
+                </p>
+                <div class="contact-data">
+                    <div><i class="fas fa-envelope me-2"></i> delpinwaresoftware@gmail.com</div>
+                    <div><i class="fas fa-phone me-2"></i> +57 311 7399378</div>
+                    <div><i class="fas fa-map-marker-alt me-2"></i> Carrera 56 bis #78-12</div>
+                </div>
+                <a href="mailto:delpinwaresoftware@gmail.com" class="cta-button">Contactar</a>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-quote">"Creamos para conectar. Codificamos para transformar."</div>
+        <div class="social-links">
+            <a href="https://wa.me/573117399378" title="WhatsApp" target="_blank" rel="noopener">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <a href="mailto:delpinwaresoftware@gmail.com" title="Gmail" target="_blank" rel="noopener">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <a href="https://instagram.com/tuusuario" title="Instagram" target="_blank" rel="noopener">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://tiktok.com/@tuusuario" title="TikTok" target="_blank" rel="noopener">
+                <i class="fab fa-tiktok"></i>
+            </a>
+        </div>
+        <p class="mb-0">&copy; 2025 DelpinWare. Todos los derechos reservados.</p>
+    </footer>
+    <div class="modal fade" id="login-modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+          <div class="modal-header border-0">
+            <h2 class="modal-title mx-auto w-100 text-center" style="font-size:1.35rem;color:#0077B6;font-weight:700;">Iniciar sesión</h2>
+            <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+          <div class="modal-body pb-0">
+            <div class="alert alert-danger d-none" id="login-error">
+                <span id="error-message">Correo o contraseña incorrectos</span>
+            </div>
+            <div class="alert alert-success d-none" id="login-success">
+                <span id="success-message">¡Inicio de sesión exitoso!</span>
+            </div>
+            <form id="login-form" autocomplete="off">
+                <div class="mb-3 text-start">
+                    <label for="email" class="form-label mb-1">Correo electrónico</label>
+                    <input type="email" id="email" class="form-control" placeholder="tu@email.com" required>
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="password" class="form-label mb-1">Contraseña</label>
+                    <input type="password" id="password" class="form-control" placeholder="Tu contraseña" required>
+                </div>
+                <div class="d-flex justify-content-end align-items-center mb-3">
+                  <a href="#" class="small" style="color: #0077B6;">¿Olvidaste tu contraseña?</a>
+                </div>
+                <button type="submit" class="cta-button w-100 mb-2" id="login-submit" style="font-size:1.1rem;">Iniciar sesión</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // NAV MOBILE: Hamburguesa IZQUIERDA y Login DERECHA
+        const navToggle = document.getElementById('nav-toggle');
+        const navMenu = document.getElementById('nav-menu');
+        navToggle.addEventListener('click', function(){
+            navMenu.classList.toggle('show');
+            this.querySelector('i').className = navMenu.classList.contains('show') ? 'fas fa-times' : 'fas fa-bars';
+        });
+        navMenu.querySelectorAll('a').forEach(link=>{
+            link.addEventListener('click', function(){
+                if(window.innerWidth < 741) {
+                    navMenu.classList.remove('show');
+                    navToggle.querySelector('i').className = 'fas fa-bars';
+                }
+            });
+        });
+
+        // Mostrar secciones solo al hacer scroll
+        function handleSectionScroll() {
+            const sections = document.querySelectorAll('.scroll-section');
+            const vh = window.innerHeight;
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= vh - 100) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+        window.addEventListener('scroll', handleSectionScroll);
+        window.addEventListener('DOMContentLoaded', handleSectionScroll);
+
+        // Modal Login con Bootstrap 5
+        const loginBtn = document.getElementById('login-btn');
+        const loginModalEl = document.getElementById('login-modal');
+        const loginModal = new bootstrap.Modal(loginModalEl, { backdrop: 'static' });
+        const loginForm = document.getElementById('login-form');
+        const loginError = document.getElementById('login-error');
+        const loginSuccess = document.getElementById('login-success');
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
+        const loginSubmit = document.getElementById('login-submit');
+        const authButtons = document.getElementById('auth-buttons');
+        const userProfile = document.getElementById('user-profile');
+        const userAvatar = document.getElementById('user-avatar');
+        loginBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.show();
+        });
+        loginModalEl.addEventListener('hidden.bs.modal', () => {
+            resetForm();
+        });
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            if (!email || !password) {
+                showError('Por favor, completa todos los campos.');
+                return;
+            }
+            loginSubmit.disabled = true;
+            loginSubmit.textContent = 'Iniciando sesión...';
+            setTimeout(() => {
+                if (email === 'demo@delpinware.com' && password === 'demo123') {
+                    showSuccess('¡Inicio de sesión exitoso!');
+                    userAvatar.textContent = email.charAt(0).toUpperCase();
+                    setTimeout(() => {
+                        loginModal.hide();
+                        authButtons.style.display = 'none';
+                        userProfile.style.display = 'flex';
+                        resetForm();
+                    }, 1000);
+                } else {
+                    showError('Correo o contraseña incorrectos. Prueba con demo@delpinware.com / demo123');
+                    loginSubmit.disabled = false;
+                    loginSubmit.textContent = 'Iniciar sesión';
+                }
+            }, 950);
+        });
+        function showError(message) {
+            errorMessage.textContent = message;
+            loginError.classList.remove('d-none');
+            loginSuccess.classList.add('d-none');
+        }
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            loginError.classList.add('d-none');
+            loginSuccess.classList.remove('d-none');
+        }
+        function resetForm() {
+            loginForm.reset();
+            loginError.classList.add('d-none');
+            loginSuccess.classList.add('d-none');
+            loginSubmit.disabled = false;
+            loginSubmit.textContent = 'Iniciar sesión';
+        }
+    </script>
+</body>
+</html>
